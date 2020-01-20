@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
         child: Text('You did it!'),
       ),
       // TODO: Set resizeToAvoidBottomInset (101)
+      resizeToAvoidBottomInset: false,
     );
   }
 }
