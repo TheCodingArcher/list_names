@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'model/products_repository.dart';
 import 'model/product.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   // TODO: Make a collection of cards (102)
@@ -69,10 +70,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       // TODO: Add app bar (102)
       appBar: AppBar(
+        brightness: Brightness.light,
         leading: IconButton(
           icon: Icon(
             Icons.menu,
-            semanticLabel: 'menu'
+//            semanticLabel: 'menu'
           ),
           onPressed: () {
             print('Menu button');
@@ -83,7 +85,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.search,
-              semanticLabel: 'search',
+//              semanticLabel: 'search',
             ),
             onPressed: () {
               print('Search Button');
@@ -92,7 +94,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.tune,
-              semanticLabel: 'filter',
+//              semanticLabel: 'filter',
             ),
             onPressed: () {
               print('Filter Button');
@@ -101,14 +103,17 @@ class HomePage extends StatelessWidget {
         ],
       ),
       // TODO: Add a grid view (102)
-      body: GridView.count(
+      /*body: GridView.count(
         crossAxisCount: 2,
         padding: EdgeInsets.all(16.0),
         childAspectRatio: 8.0 / 9.0,
         children: _buildGridCards(context)
       ),
       // TODO: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,*/
+      body: AsymmetricView(
+        products: ProductsRepository.loadProducts(Category.all),
+      ),
     );
   }
 }
