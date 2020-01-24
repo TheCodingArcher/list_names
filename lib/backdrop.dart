@@ -3,6 +3,8 @@ import 'package:meta/meta.dart';
 
 import 'model/product.dart';
 
+const double _kFlingVelocity = 2.0;
+
 class Backdrop extends StatefulWidget {
   final Category currentCategory;
   final Widget frontLayer;
@@ -29,12 +31,44 @@ class Backdrop extends StatefulWidget {
 class _BackdropState extends State<Backdrop>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 300),
+      value: 1.0,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool get _frontLayerVisible {
+    final AnimationStatus status = _controller.status;
+    return status == AnimationStatus.completed ||
+          status == AnimationStatus.forward;
+  }
+
+  void _toggleBackdropLayerVisibility() {
+    _controller.fling(
+        velocity: _frontLayerVisible ? -_kFlingVelocity : _kFlingVelocity
+    );
+  }
 
   Widget _buildStack() {
     return Stack(
       key: _backdropKey,
       children: <Widget>[
-        widget.backLayer,
+        ExcludeSemantics(
+          child: widget.backLayer,
+          excluding: _frontLayerVisible,
+        ),
         _FrontLayer(child: widget.frontLayer),
       ],
     );
