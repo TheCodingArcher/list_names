@@ -10,7 +10,6 @@ import 'category_menu_page.dart';
 
 // TODO: Convert ShrineApp to stateful widget (104)
 class ShrineApp extends StatefulWidget {
-
   @override
   _ShrineAppState createState() => _ShrineAppState();
 }
@@ -24,7 +23,7 @@ class _ShrineAppState extends State<ShrineApp> {
       title: 'Shrine',
       // TODO: Change home: to a Backdrop with a HomePage frontLayer (104)
       home: Backdrop(
-        currentCategory: Category.all,
+        currentCategory: _currentCategory,
         frontLayer: HomePage(category: _currentCategory),
         backLayer: CategoryMenuPage(
           currentCategory: _currentCategory,
@@ -48,41 +47,48 @@ class _ShrineAppState extends State<ShrineApp> {
       _currentCategory = category;
     });
   }
+}
 
-  Route<dynamic> _getRoute(RouteSettings settings) {
-    if (settings.name != '/login') {
-      return null;
-    }
-
-    return MaterialPageRoute<void>(
-      settings: settings,
-      builder: (BuildContext context) => LoginPage(),
-      fullscreenDialog: true,
-    );
+Route<dynamic> _getRoute(RouteSettings settings) {
+  if (settings.name != '/login') {
+    return null;
   }
+
+  return MaterialPageRoute<void>(
+    settings: settings,
+    builder: (BuildContext context) => LoginPage(),
+    fullscreenDialog: true,
+  );
 }
 
 // TODO: Build a Shrine Theme (103)
 final ThemeData _kShrineTheme = _buildShrineTheme();
 
+IconThemeData _customIconTheme(IconThemeData original) {
+  return original.copyWith(color: kShrineBrown900);
+}
+
 ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    primaryColor: kShrinePurple,
+    accentColor: kShrineBrown900,
+    primaryColor: kShrinePink100,
+    scaffoldBackgroundColor: kShrineBackgroundWhite,
     cardColor: kShrineBackgroundWhite,
     textSelectionColor: kShrinePink100,
     errorColor: kShrineErrorRed,
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: kShrinePurple,
-      textTheme: ButtonTextTheme.primary,
-      colorScheme: ColorScheme.light().copyWith(primary: kShrinePurple)
+      textTheme: ButtonTextTheme.normal,
     ),
-    scaffoldBackgroundColor: kShrineSurfaceWhite,
+    primaryIconTheme: base.iconTheme.copyWith(color: kShrineBrown900),
+    inputDecorationTheme: InputDecorationTheme(
+      border: CutCornersBorder(),
+    ),
     textTheme: _buildShrineTextTheme(base.textTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-    primaryIconTheme: base.iconTheme.copyWith(color: kShrineSurfaceWhite),
-    inputDecorationTheme: InputDecorationTheme(border: CutCornersBorder()),
+    iconTheme: _customIconTheme(base.iconTheme),
   );
 }
 
@@ -98,6 +104,10 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
     caption: base.caption.copyWith(
       fontWeight: FontWeight.w400,
       fontSize: 14.0,
+    ),
+    body2: base.body2.copyWith(
+      fontWeight: FontWeight.w500,
+      fontSize: 16.0,
     ),
   ).apply(
     fontFamily: 'Raleway',

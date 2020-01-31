@@ -7,7 +7,7 @@ import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   // TODO: Make a collection of cards (102)
-  List<Card> _buildGridCards(BuildContext context) {
+  /*List<Card> _buildGridCards(BuildContext context) {
     List<Product> products = ProductsRepository.loadProducts(Category.all);
 
     if (products == null || products.isEmpty) {
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
         ),
       );
     }).toList();
-  }
+  }*/
 
   // TODO: Add a variable for Category (104)
   final Category category;
@@ -71,54 +71,5 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Return an AsymmetricView (104)
     return AsymmetricView(products: ProductsRepository.loadProducts(category));
-    // TODO: Pass Category variable to AsymmetricView (104)
-    /*return Scaffold(
-      // TODO: Add app bar (102)
-      appBar: AppBar(
-        brightness: Brightness.dark,
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-//            semanticLabel: 'menu'
-          ),
-          onPressed: () {
-            print('Menu button');
-          },
-        ),
-        title: Text('SHRINE'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-//              semanticLabel: 'search',
-            ),
-            onPressed: () {
-              print('Search Button');
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.tune,
-//              semanticLabel: 'filter',
-            ),
-            onPressed: () {
-              print('Filter Button');
-            },
-          ),
-        ],
-      ),
-      // TODO: Add a grid view (102)
-      *//*body: GridView.count(
-        crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
-        childAspectRatio: 8.0 / 9.0,
-        children: _buildGridCards(context)
-      ),
-      // TODO: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset: false,*//*
-      body: AsymmetricView(
-        products: ProductsRepository.loadProducts(Category.all),
-      ),
-    );*/
   }
 }
